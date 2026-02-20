@@ -26,10 +26,15 @@ clean:
 	$(GO_CLEAN)
 	rm -rf bin/
 
+install-tools:
+	go install github.com/spf13/cobra-cli@latest
+
+
 help:
 	@echo "Available targets:"
 	@echo "  build   : Build the application"
 	@echo "  run     : Run the application"
 	@echo "  test    : Run tests"
 	@echo "  clean   : Remove binary and build artifacts"
+	@echo "  install-tools   : Install necessary tools for development"
 	@echo "  help    : Show this help message"
