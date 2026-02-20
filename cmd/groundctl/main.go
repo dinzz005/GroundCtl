@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/dinzz005/GroundCtl/cmd"
 
 func main() {
-	fmt.Println("Hello World!!!")
+	cmd.Execute()
 }
