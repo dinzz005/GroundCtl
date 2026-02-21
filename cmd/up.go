@@ -8,6 +8,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var configFile string
+
 // upCmd represents the up command
 var upCmd = &cobra.Command{
 	Use:   "up",
@@ -19,19 +21,26 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-
+		var path string
+		var err error
 		// calling the config finder to find the manifest file
-		filePath, err := config.FindManifest()
+		if configFile != "" {
+			path, err = config.FindManifestByPath(configFile)
+		} else {
+			path, err = config.FindManifest()
+		}
 		if err != nil {
 			cmd.PrintErrf("Error finding manifest: %v\n", err)
 			return
 		}
-		cmd.Println("found manifest file at:", filePath)
+		cmd.Println("found manifest file at:", path)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(upCmd)
+
+	upCmd.Flags().StringVarP(&configFile, "file", "f", "", "Path to the manifest file (optional)")
 
 	// Here you will define your flags and configuration settings.
 

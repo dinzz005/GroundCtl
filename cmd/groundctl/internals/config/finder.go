@@ -25,5 +25,12 @@ func FindManifest() (string, error) {
 		}
 	}
 	return "", errors.New("config file not found.")
+}
+
+func FindManifestByPath(path string) (string, error) {
+	if stat, err := os.Stat(path); err == nil && !stat.IsDir() {
+		return path, nil
+	}
+	return "", errors.New("config file not found at specified path.")
 
 }
