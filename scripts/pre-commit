@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Get a list of staged Go files
+files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.go$' || true)
+
+if [ -z "$files" ]; then
+    exit 0
+fi
+
+echo "Formatting staged Go files..."
+
+for file in $files; do
+    # Read the staged version of the file, format it, and hash it
+    # We use git hash-object -w to write the formatted content into git's database
+    # and return its new blob hash.
+    NEW_BLOB=$(git show ":$file" | gofmt | git hash-object -w --stdin)
+    
+    # Get the file's current mode from the index
+    MODE=$(git ls-files -s "$file" | awk '{print $1}')
+    
+    # Update the git index directly with the formatted blob, bypassing the working tree
+    # This specifically overwrites the staged version with the formatted version
+    git update-index --cacheinfo "$MODE,$NEW_BLOB,$file"
+done
+
+echo "Staged files formatted successfully."
+exit 0

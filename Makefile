@@ -29,6 +29,9 @@ clean:
 install-tools:
 	go install github.com/spf13/cobra-cli@latest
 
+setup-hooks:
+	./scripts/setup-pre-commit.sh
+
 
 help:
 	@echo "Available targets:"
@@ -37,4 +40,5 @@ help:
 	@echo "  test    : Run tests"
 	@echo "  clean   : Remove binary and build artifacts"
 	@echo "  install-tools   : Install necessary tools for development"
+	@echo "  setup-hooks     : Install pre-commit hooks"
 	@echo "  help    : Show this help message"
