@@ -24,4 +24,9 @@ for file in $files; do
 done
 
 echo "Staged files formatted successfully."
+
+# Format the whole codebase in the working directory
+echo "Formatting entire codebase in working directory..."
+gofmt -w .
+
 exit 0
